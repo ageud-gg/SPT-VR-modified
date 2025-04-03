@@ -1,4 +1,5 @@
-﻿using EFT.InventoryLogic;
+﻿using EFT;
+using EFT.InventoryLogic;
 using EFT.UI;
 using EFT.UI.DragAndDrop;
 using HarmonyLib;
@@ -12,6 +13,7 @@ using TarkovVR.Source.Settings;
 using UnityEngine;
 using UnityEngine.UI;
 using Valve.VR;
+using static GClass2756;
 using static TarkovVR.Source.Controls.InputHandlers;
 
 public class CircularSegmentUI : MonoBehaviour
@@ -85,7 +87,7 @@ public class CircularSegmentUI : MonoBehaviour
             transform.localEulerAngles = new Vector3(290, 252, 80);
         }
     }
-
+     
     public void CreateQuickSlotUi()
     {
         leftHand = true;

@@ -13,6 +13,8 @@ using static InteractionsHandlerClass;
 using TarkovVR.Patches.Core.VR;
 using TarkovVR.Source.Settings;
 using EFT.InventoryLogic;
+using static RootMotion.FinalIK.GenericPoser;
+using EFT.UI.Map;
 
 namespace TarkovVR.Source.Player.Interactions
 {
@@ -34,12 +36,14 @@ namespace TarkovVR.Source.Player.Interactions
         public GameObject grenadeLaser;
         public bool useLeftHandForRaycast = false;
         private float scopeTimeHeldFor = 0;
+        private static MapScreen mapUi;
 
 
         private bool hasEnteredBackHolster = false;
         private bool hasEnteredHeadGear = false;
         private bool hasEnteredBackpack = false;
         private bool hasEnteredSidearmHolster = false;
+        private bool hasEnteredLeftHip = false; // modified
         private bool hasEnteredScope = false;
         private bool hasEnteredRigCollider = false;
         private bool hasEnteredLootCollider = false;
@@ -111,6 +115,7 @@ namespace TarkovVR.Source.Player.Interactions
             bool inHeadGear = false;
             bool inBackpack = false;
             bool inSidearmHolster = false;
+            bool inRightHip = false; // modified
             bool inScope = false;
             bool inRigCollider = false;
             bool inLootCollider = false;
@@ -190,6 +195,35 @@ namespace TarkovVR.Source.Player.Interactions
                     handleScopeInteraction();
                     noScopeHit = false;
                 }
+
+                // start modified section
+
+                else if (collider.gameObject.name == "leftHipCollider")
+                {
+                    inRightHip = true;
+                    if (!hasEnteredLeftHip)
+                    {
+                        SteamVR_Actions._default.Haptic.Execute(0, INTERACT_HAPTIC_LENGTH, 1, INTERACT_HAPTIC_AMOUNT, (leftHandedMode) ? SteamVR_Input_Sources.RightHand : SteamVR_Input_Sources.LeftHand);
+                        hasEnteredLeftHip = true;
+                    }
+                    if (secondaryHandGrip.stateDown && mapUi != null)
+                    {
+                        bool isActive = mapUi.gameObject.activeSelf;
+                        mapUi.gameObject.SetActive(!isActive);
+
+                        if (!isActive)
+                        {
+                            VRGlobals.vrPlayer.PositionMapUiOnLeftWrist();
+                        }
+                    }
+                    if (secondaryHandGrip.stateUp && mapUi != null)
+                    {
+                        mapUi.gameObject.SetActive(false);
+                    }
+                }
+
+                // end modified section
+
                 else if (collider.gameObject.layer == 3 && collider.gameObject.name == "rigCollider")
                 {
                     inRigCollider = true;
@@ -356,6 +390,8 @@ namespace TarkovVR.Source.Player.Interactions
                 hasEnteredBackHolster = false;
             if (hasEnteredSidearmHolster && !inSidearmHolster)
                 hasEnteredSidearmHolster = false;
+            if (hasEnteredLeftHip && !inRightHip)
+                hasEnteredLeftHip = false;
             if (hasEnteredRigCollider && !inRigCollider)
                 hasEnteredRigCollider = false;
             if (hasEnteredBackpack && !inBackpack)

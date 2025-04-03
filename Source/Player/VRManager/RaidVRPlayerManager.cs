@@ -1,12 +1,14 @@
 ﻿using EFT;
 using EFT.Hideout;
 using EFT.UI;
+using EFT.UI.Map;
 using TarkovVR.Patches.Core.Player;
 using TarkovVR.Patches.Core.VR;
 using TarkovVR.Patches.UI;
 using TarkovVR.Source.Settings;
 using UnityEngine;
 using Valve.VR;
+using static RootMotion.FinalIK.GenericPoser;
 
 namespace TarkovVR.Source.Player.VRManager
 {
@@ -27,6 +29,7 @@ namespace TarkovVR.Source.Player.VRManager
         private bool raycastHit = false;
         public bool positionTransitUi;
         private Quaternion camRotation;
+        private static MapScreen mapUi; // modified
 
 
 
@@ -101,6 +104,27 @@ namespace TarkovVR.Source.Player.VRManager
             UIPatches.notifierUi.transform.localEulerAngles = (VRSettings.GetLeftHandedMode()) ? new Vector3(90, 272, 0) : new Vector3(272, 163, 283);
             UIPatches.notifierUi.transform.localScale = new Vector3(0.0003f, 0.0003f, 0.0003f);
         }
+
+        // Start modified section
+
+        public override void PositionMapUiOnLeftWrist()
+        {
+            leftWristUi.transform.SetParent(InitVRPatches.leftWrist, false);
+            leftWristUi.transform.localPosition = new Vector3(-0.1f, 0.04f, 0.035f);
+            leftWristUi.transform.localEulerAngles = new Vector3(304, 180, 180);
+
+            // Attach the Map UI to the left wrist
+            if (mapUi != null)
+            {
+                mapUi.transform.SetParent(leftWristUi.transform, false);
+                mapUi.transform.localPosition = new Vector3(0.05f, 0.1f, 0.03f); // Adjust position
+                mapUi.transform.localEulerAngles = new Vector3(90, 0, 180); // Adjust rotation
+                mapUi.transform.localScale = new Vector3(0.0003f, 0.0003f, 0.0003f); // Adjust scale
+            }
+        }
+
+        // End modified section
+
         public void PlaceUiInteracter(RaycastHit hit)
         {
 

@@ -1,4 +1,5 @@
 ﻿using EFT.InventoryLogic;
+using EFT.UI.Map;
 using Newtonsoft.Json.Linq;
 using Open.Nat;
 using Sirenix.Serialization;
@@ -190,6 +191,14 @@ namespace TarkovVR.Source.Player.VRManager
         }
 
         public abstract void PositionLeftWristUi();
+
+        // Start Modified Section
+
+        public abstract void PositionMapUiOnLeftWrist();
+
+
+        // End Modified section
+
         public void SetNotificationUi()
         {
             if (UIPatches.notifierUi && leftWristUi)

@@ -49,6 +49,7 @@ namespace TarkovVR.Patches.UI
         public static AnimatedTextPanel opticUi;
         public static NotifierView notifierUi;
         public static ExtractionTimersPanel extractionTimerUi;
+        private static MapScreen mapUi;  // modified
         [HarmonyPostfix]
         [HarmonyPatch(typeof(UsingPanel), "Init")]
         private static void SetGameUI(UsingPanel __instance)
@@ -105,6 +106,17 @@ namespace TarkovVR.Patches.UI
             extractionTimerUi = __instance;
             VRGlobals.vrPlayer.PositionLeftWristUi();
         }
+
+        // Start Modified section
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(MapScreen), "Awake")]
+        private static void SetMapScreen(MapScreen __instance)
+        {
+            mapUi = __instance;
+        }
+
+        // Stop Modified section
 
         public static void PositionGameUi(GameUI __instance)
         {

@@ -55,6 +55,12 @@ namespace TarkovVR.Source.Player.VRManager
             UIPatches.notifierUi.transform.localEulerAngles = (VRSettings.GetLeftHandedMode()) ? new Vector3(90, 272, 0) : new Vector3(272, 163, 283);
             UIPatches.notifierUi.transform.localScale = new Vector3(0.0003f, 0.0003f, 0.0003f);
         }
+
+        public override void PositionMapUiOnLeftWrist()
+        {
+           
+        }
+
         public void PositionInteractionUI()
         {
             camRotation = Camera.main.transform.localRotation;

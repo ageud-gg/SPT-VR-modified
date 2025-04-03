@@ -123,6 +123,18 @@ namespace TarkovVR.Patches.Core.VR
                 VRGlobals.sidearmHolster.transform.localRotation = Quaternion.identity;
                 VRGlobals.sidearmHolster.gameObject.layer = 3;
 
+                // start modified section
+
+                VRGlobals.leftHip = new GameObject("leftHipCollider").transform;
+                BoxCollider leftHipCollider = VRGlobals.leftHip.gameObject.AddComponent<BoxCollider>();
+                leftHipCollider.isTrigger = true;
+                leftHipCollider.size = new Vector3(0.01f, 0.01f, 0.01f);
+                VRGlobals.leftHip.transform.localPosition = player.PlayerBones.LeftThigh1.localPosition;
+                VRGlobals.leftHip.transform.localRotation = Quaternion.identity;
+                VRGlobals.leftHip.gameObject.layer = 3;
+
+                // end modified section
+
             }
 
             //if (VRGlobals.leftArmBendGoal == null) {

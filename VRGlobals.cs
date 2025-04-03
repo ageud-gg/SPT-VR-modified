@@ -44,6 +44,7 @@ namespace TarkovVR
         public static bool inGame = false;
 
         public static Transform backHolster;
+        public static Transform leftHip; // modified section
         public static Transform backpackCollider;
         public static Transform leftArmBendGoal;
         public static Transform rightArmBendGoal;
