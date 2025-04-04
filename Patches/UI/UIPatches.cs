@@ -107,17 +107,6 @@ namespace TarkovVR.Patches.UI
             VRGlobals.vrPlayer.PositionLeftWristUi();
         }
 
-        // Start Modified section
-
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(MapScreen), "Awake")]
-        private static void SetMapScreen(MapScreen __instance)
-        {
-            mapUi = __instance;
-        }
-
-        // Stop Modified section
-
         public static void PositionGameUi(GameUI __instance)
         {
             __instance.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
@@ -482,6 +471,15 @@ namespace TarkovVR.Patches.UI
             __instance.transform.root.eulerAngles = originalRot;
             return false;
         }
+
+        // Start Modified section
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(MapScreen), "Show")]
+        private static void SetMapScreen(MapScreen __instance)
+        {
+            mapUi = __instance;
+        }
+        // Stop Modified section
 
 
         [HarmonyPrefix]
