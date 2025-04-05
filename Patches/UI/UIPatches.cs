@@ -49,7 +49,7 @@ namespace TarkovVR.Patches.UI
         public static AnimatedTextPanel opticUi;
         public static NotifierView notifierUi;
         public static ExtractionTimersPanel extractionTimerUi;
-        private static MapScreen mapUi;  // modified
+        public static MapScreen mapUi;  // modified
         [HarmonyPostfix]
         [HarmonyPatch(typeof(UsingPanel), "Init")]
         private static void SetGameUI(UsingPanel __instance)

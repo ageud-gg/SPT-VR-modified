@@ -51,6 +51,8 @@ namespace TarkovVR.Source.Player.VRManager
 
         public GameObject radialMenu;
         protected GameObject leftWristUi;
+        protected GameObject leftPalmUi;
+        protected GameObject mapUi; // modified
 
 
         public bool isSupporting = false;
@@ -140,7 +142,7 @@ namespace TarkovVR.Source.Player.VRManager
                     uiComp.Init();
                     //uiComp.CreateGunUi(new string[] { "reload.png", "checkAmmo.png", "inspect.png", "fixMalfunction.png", "fireMode_burst.png" });
                     uiComp.CreateGunUi(new string[] { "firstPrimary.png", "secondPrimary.png", "pistol.png", "knife.png"});
-                    radialMenu.active = false;
+                    radialMenu.SetActive(false);
                 }
             }
             if (LeftHand) { 
@@ -162,6 +164,21 @@ namespace TarkovVR.Source.Player.VRManager
                     //UIPatches.stancePanel.transform.localEulerAngles = new Vector3(270, 87, 0);
 
                 }
+
+                // modified section
+
+                /*
+                if (!mapUi)
+                {
+                    mapUi = new GameObject("mapUi");
+                    mapUi.layer = 5;
+                    mapUi.transform.parent = VRGlobals.player.PlayerBones.LeftPalm;
+                    mapUi.AddComponent<Canvas>().renderMode = RenderMode.WorldSpace;
+                    mapUi.SetActive(false);
+                }
+  
+                */
+                // end modified section
             }
 
 

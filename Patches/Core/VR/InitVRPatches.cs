@@ -1,4 +1,5 @@
-﻿using EFT;
+﻿using BepInEx.Logging;
+using EFT;
 using EFT.Animations;
 using HarmonyLib;
 using RootMotion.FinalIK;
@@ -125,15 +126,22 @@ namespace TarkovVR.Patches.Core.VR
 
                 // start modified section
 
+                
                 VRGlobals.leftHip = new GameObject("leftHipCollider").transform;
                 BoxCollider leftHipCollider = VRGlobals.leftHip.gameObject.AddComponent<BoxCollider>();
                 leftHipCollider.isTrigger = true;
                 leftHipCollider.size = new Vector3(0.01f, 0.01f, 0.01f);
-                VRGlobals.leftHip.transform.parent = player.PlayerBones.LeftLegHolsterPistol;
-                VRGlobals.leftHip.transform.localPosition = new Vector3(0, 0.1f, 0.1f);
+                VRGlobals.leftHip.transform.parent = player.PlayerBones.HolsterPistol; // Original = transform
+                VRGlobals.leftHip.transform.localPosition = new Vector3(0.1f, -0.1f, 0f);
                 VRGlobals.leftHip.transform.localRotation = Quaternion.identity;
                 VRGlobals.leftHip.gameObject.layer = 3;
 
+                GameObject debugVisual = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                debugVisual.transform.SetParent(VRGlobals.leftHip);
+                debugVisual.transform.localPosition = Vector3.zero;
+                debugVisual.transform.localRotation = Quaternion.identity;
+                debugVisual.transform.localScale = new Vector3(0.03f, 0.03f, 0.03f);
+                debugVisual.GetComponent<Collider>().enabled = false;
                 // end modified section
 
             }

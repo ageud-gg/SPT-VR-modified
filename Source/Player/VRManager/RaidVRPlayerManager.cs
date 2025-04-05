@@ -29,7 +29,6 @@ namespace TarkovVR.Source.Player.VRManager
         private bool raycastHit = false;
         public bool positionTransitUi;
         private Quaternion camRotation;
-        private static MapScreen mapUi; // modified
 
 
 
@@ -109,18 +108,12 @@ namespace TarkovVR.Source.Player.VRManager
 
         public override void PositionMapUiOnLeftWrist()
         {
-            leftWristUi.transform.SetParent(InitVRPatches.leftWrist, false);
-            leftWristUi.transform.localPosition = new Vector3(-0.1f, 0.04f, 0.035f);
-            leftWristUi.transform.localEulerAngles = new Vector3(304, 180, 180);
+            leftPalmUi.transform.SetParent(InitVRPatches.leftPalm, false);
+            leftPalmUi.transform.localPosition = new Vector3(-0.1f, 0.04f, 0.035f);
+            leftPalmUi.transform.localEulerAngles = new Vector3(304, 180, 180);
 
-            // Attach the Map UI to the left wrist
-            if (mapUi != null)
-            {
-                mapUi.transform.SetParent(leftWristUi.transform, false);
-                mapUi.transform.localPosition = new Vector3(0.05f, 0.1f, 0.03f); // Adjust position
-                mapUi.transform.localEulerAngles = new Vector3(90, 0, 180); // Adjust rotation
-                mapUi.transform.localScale = new Vector3(0.0003f, 0.0003f, 0.0003f); // Adjust scale
-            }
+            UIPatches.mapUi.transform.SetParent(leftPalmUi.transform, false);
+            UIPatches.mapUi.transform.localScale = new Vector3(0.0003f, 0.0003f, 0.0003f);
         }
 
         // End modified section
